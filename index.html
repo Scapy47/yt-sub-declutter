@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop File Uploader</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.fuchsia.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --pico-border-radius: 2rem;
+        }
+
+        #drop-area {
+            width: 100%;
+            height: 60vh;
+        }
+    </style>
+</head>
+
+<body class="container">
+    <div class="">
+        <button id="drop-area" class="container" data-tooltip="import subscriptions csv from youtube"
+            data-placement="bottom">
+            Drop files here or click to select files
+        </button>
+        <dialog id="showOffUI">
+            <div class="container">
+                <h1 id="name"></h1>
+                <img alt="pic" id="pic" width="100px" height="100px">
+                <a id="link" target="_blank"></a>
+                <div id="someVideos"></div>
+                <button id="next"></button>
+            </div>
+        </dialog>
+    </div>
+    <script type="module">
+        const Data = []
+        const dropArea = document.querySelector("#drop-area")
+        const input = document.createElement("input")
+        input.type = "file"
+        input.accept = "text/csv"
+
+        const events = ["dragleave", "dragover", "dragenter"].forEach((element) => {
+            dropArea.addEventListener(element, e => {
+                e.preventDefault()
+                e.stopPropagation()
+            })
+        })
+
+        // dropArea.addEventListener("click", () => {
+        //     input.click()
+        //     createData()          // need work
+        // })
+
+        dropArea.addEventListener("drop", (e) => {
+            e.preventDefault()
+            const files = event.dataTransfer.files;
+            if (1 >= files.length) {
+                input.files = files
+            }
+            createData()
+                .then(showData)
+        })
+
+        const createData = () => {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader()
+                reader.readAsText(input.files[0])
+
+                reader.onloadend = (e) => {
+
+                    const dataArr = e.target.result.split("\n")
+                    dataArr.shift()
+
+                    dataArr.forEach(e => {
+                        const element = e.split(",")
+                        Data.push({
+                            id: element[0],
+                            url: element[1],
+                            name: element[2]
+                        })
+                    })
+                    resolve()
+                }
+                reader.onerror = () => {
+                    reject("Error reading file")
+                }
+            })
+        }
+
+        const dialog = document.querySelector("#showOffUI")
+        const next = document.querySelector("#next")
+        let count = 0
+
+        const showData = () => {
+            dialog.showModal()
+            fetch(`https://pipedapi.kavin.rocks/channel/${Data[count].id}`)
+                .then(res => res.json())
+                .then(obj => {
+                    document.querySelector("#pic").src = obj.avatarUrl
+                })
+                document.querySelector("#link").href = Data[count].url
+                document.querySelector("#link").innerText = Data[count].name
+                Data.shift()
+            count += 1
+        }
+        next.addEventListener("click", showData)
+    </script>
+</body>
+
+</html>
