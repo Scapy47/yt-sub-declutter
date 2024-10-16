@@ -33,6 +33,9 @@
         }
 
         #next {
+            position: absolute;
+            bottom: 0;
+            margin-bottom: 2rem;
             display: flex;
             place-content: center;
             place-items: center;
@@ -42,6 +45,14 @@
             span {
                 font-size: large;
                 font-weight: bolder;
+            }
+
+            #showOffUI {
+                display: flex;
+                flex-direction: column;
+                div {
+                    width: 100%;
+                }
             }
 
         }
@@ -71,15 +82,15 @@
                 <a id="link" target="_blank"></a>
                 <p id="description"></p>
                 <div id="someVideos"></div>
-                <button id="next">
-                    <span>Next</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-caret-right-fill" viewBox="0 0 16 16">
-                        <path
-                            d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
-                    </svg>
-                </button>
             </div>
+            <button id="next">
+                <span>Next</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                    <path
+                        d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
+                </svg>
+            </button>
         </dialog>
     </section>
     <footer>
