@@ -32,10 +32,14 @@
             text-align: center;
         }
 
+        #modal {
+            height: 100dvh;
+            width: 100dvh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
         #next {
-            position: absolute;
-            bottom: 0;
-            margin-bottom: 2rem;
             display: flex;
             place-content: center;
             place-items: center;
@@ -50,14 +54,19 @@
             #showOffUI {
                 display: flex;
                 flex-direction: column;
-                div {
-                    width: 100%;
-                }
             }
 
         }
-        .scrollable {
+
+        .description{
+            height: 60%;
             overflow: scroll;
+            scrollbar-width: 2rem;
+        }
+        
+        .showOff-div {
+            height: 70%;
+            overflow: hidden;
         }
     </style>
 </head>
@@ -79,23 +88,25 @@
             Drop files here or click to select files
         </button>
         <dialog id="showOffUI">
-            <div class="container">
-                <h1><a id="link" target="_blank"></a></h1>
-                <img alt="pic" id="pic" width="100px" height="100px">
-                <img alt="banner" id="banner" width="100px" height="100px">
-                <div class="scrollable">
-                    <p id="description"></p>
+            <div id="modal">
+                <div class="container showOff-div">
+                    <h1><a id="link" target="_blank"></a></h1>
+                    <img alt="pic" id="pic" width="100px" height="100px">
+                    <img alt="banner" id="banner" width="100px" height="100px">
+                    <div class="description">
+                        <p id="description"></p>
+                    </div>
+                    <div id="someVideos"></div>
                 </div>
-                <div id="someVideos"></div>
+                <button id="next">
+                    <span>Next</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                        <path
+                            d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
+                    </svg>
+                </button>
             </div>
-            <button id="next">
-                <span>Next</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-caret-right-fill" viewBox="0 0 16 16">
-                    <path
-                        d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
-                </svg>
-            </button>
         </dialog>
     </section>
     <footer>
