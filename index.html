@@ -231,7 +231,7 @@
         const showData = () => {
             dialog.showModal()
             document.querySelector("#pic").style.display = "inline"
-            document.querySelector("#someVideos").appendChild("")
+            document.querySelector("#someVideos").innerHTML = ""
 
             fetch(`https://pipedapi.kavin.rocks/channel/${Data[count].id}`)
                 .then(res => res.json())
