@@ -19,26 +19,72 @@
         #drop-area {
             width: 100%;
             height: 60vh;
+            font-weight: bolder;
+        }
+
+        .bi-upload {
+            display: block;
+            width: 100%;
+            height: 30%;
+        }
+
+        header {
+            text-align: center;
+        }
+
+        #next {
+            display: flex;
+            place-content: center;
+            place-items: center;
+            padding: 1rem;
+            width: 100%;
+
+            span {
+                font-size: large;
+                font-weight: bolder;
+            }
+
         }
     </style>
 </head>
 
 <body class="container">
-    <div class="">
+    <header>
+        <h1>Youtube subscription Declutter</h1>
+    </header>
+    <section class="">
         <button id="drop-area" class="container" data-tooltip="import subscriptions csv from youtube"
             data-placement="bottom">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upload"
+                viewBox="0 0 16 16">
+                <path
+                    d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
+                <path
+                    d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z" />
+            </svg>
             Drop files here or click to select files
         </button>
         <dialog id="showOffUI">
             <div class="container">
-                <h1 id="name"></h1>
+                <img alt="banner" id="banner" width="100px" height="100px">
                 <img alt="pic" id="pic" width="100px" height="100px">
                 <a id="link" target="_blank"></a>
+                <p id="description"></p>
                 <div id="someVideos"></div>
-                <button id="next"></button>
+                <button id="next">
+                    <span>Next</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                        <path
+                            d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
+                    </svg>
+                </button>
             </div>
         </dialog>
-    </div>
+    </section>
+    <footer>
+
+    </footer>
     <script type="module">
         const Data = []
         const dropArea = document.querySelector("#drop-area")
@@ -53,14 +99,15 @@
             })
         })
 
-        // dropArea.addEventListener("click", () => {
-        //     input.click()
-        //     createData()          // need work
-        // })
+        dropArea.addEventListener("click", () => input.click())
+        input.addEventListener("change", () => {
+            createData()
+                .then(showData)
+        })
 
         dropArea.addEventListener("drop", (e) => {
             e.preventDefault()
-            const files = event.dataTransfer.files;
+            const files = e.dataTransfer.files;
             if (1 >= files.length) {
                 input.files = files
             }
@@ -104,10 +151,12 @@
                 .then(res => res.json())
                 .then(obj => {
                     document.querySelector("#pic").src = obj.avatarUrl
+                    document.querySelector("#banner").src = obj.bannerUrl
+                    document.querySelector("#description").innerText = obj.description
                 })
-                document.querySelector("#link").href = Data[count].url
-                document.querySelector("#link").innerText = Data[count].name
-                Data.shift()
+            document.querySelector("#link").href = Data[count].url
+            document.querySelector("#link").innerText = Data[count].name
+            Data.shift()
             count += 1
         }
         next.addEventListener("click", showData)
