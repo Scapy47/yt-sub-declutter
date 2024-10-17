@@ -16,3 +16,6 @@ This app allows you to effortlessly browse through your YouTube subscriptions, v
 - 🎥 **Sample Videos**: Watch a video from the channel to decide if it's worth keeping.
 - 🚀 **Unsubscribe with Ease**: Direct links to YouTube let you quickly unsubscribe.
 - 🔄 **Simple Navigation**: Browse through each channel with just a click.
+
+## 🚀 how to Use
+https://scapy47.github.io/yt-sub-declutter/
