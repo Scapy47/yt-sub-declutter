@@ -243,7 +243,6 @@
                     document.querySelector("#pic").src = obj.avatarUrl
                     document.querySelector("#description").innerText = obj.description
                     let vcount = 0
-                    console.log(obj.relatedStreams)
                     obj.relatedStreams.forEach((element) => {
                         if (vcount === 3) return
                         const iframe = document.createElement("iframe")
